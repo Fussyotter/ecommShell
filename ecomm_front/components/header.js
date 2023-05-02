@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 const Header = () => {
 	return (
@@ -10,6 +11,13 @@ const Header = () => {
 					<li>Sign Up</li>
 				</ul>
 			</nav>
+			<div>
+				<Link href='/productPage' variant='body2'>
+					{"Don't have an account? Sign Up"}
+				</Link>
+
+			</div>
+			
 			<form>
 				<input type='text' placeholder='Search' />
 				<button type='submit'>Search</button>
