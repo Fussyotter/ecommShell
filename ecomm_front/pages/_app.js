@@ -7,6 +7,8 @@ import { CacheProvider } from '@emotion/react';
 import theme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
 import { CsrfProvider } from '../context/csrf_context';
+import { ProductProvider } from '@/context/product_context';
+
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -21,9 +23,11 @@ export default function MyApp(props) {
 			</Head>
 			<ThemeProvider theme={theme}>
 				<CsrfProvider >
+					<ProductProvider>
 
 				<CssBaseline />
 				<Component {...pageProps} />
+					</ProductProvider>
 				</CsrfProvider>
 			</ThemeProvider>
 		</CacheProvider>
