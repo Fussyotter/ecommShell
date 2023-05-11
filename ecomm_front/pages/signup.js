@@ -37,20 +37,15 @@ export default function Signup() {
         signUpNewUser({
             username,
             password,
-            street_address: streetAddress,
             email: email,
-            city,
-            state,
-            zip_code: zipCode,
+
         });
     };
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [streetAddress, setStreetAddress] = useState('');
-    const [city, setCity] = useState('');
+
     const [email, setEmail] = useState('');
-    const [state, setState] = useState('');
-    const [zipCode, setZipCode] = useState('');
+
     const [error, setError] = useState('');
     const { csrfToken } = useContext(Csrf_context);
   return (
@@ -103,54 +98,10 @@ export default function Signup() {
 								onChange={(e) => setEmail(e.target.value)}
 							/>
 						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								autoComplete='street-address'
-								name='streetAddress'
-								required
-								fullWidth
-								id='streetAddress'
-								label='Street Address'
-								value={streetAddress}
-								onChange={(e) => setStreetAddress(e.target.value)}
-							/>
-						</Grid>
-						<Grid item xs={12} sm={6}>
-							<TextField
-								autoComplete='city'
-								name='city'
-								required
-								fullWidth
-								id='city'
-								label='City'
-								value={city}
-								onChange={(e) => setCity(e.target.value)}
-							/>
-						</Grid>
-						<Grid item xs={12} sm={6}>
-							<TextField
-								autoComplete='state'
-								name='state'
-								required
-								fullWidth
-								id='state'
-								label='State'
-								value={state}
-								onChange={(e) => setState(e.target.value)}
-							/>
-						</Grid>
-						<Grid item xs={12} sm={6}>
-							<TextField
-								autoComplete='zip-code'
-								name='zipCode'
-								required
-								fullWidth
-								id='zipCode'
-								label='Zip Code'
-								value={zipCode}
-								onChange={(e) => setZipCode(e.target.value)}
-							/>
-						</Grid>
+						
+						
+						
+						
 					</Grid>
 					<Button
 						type='submit'
