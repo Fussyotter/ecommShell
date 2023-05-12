@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
     <Header/>
-    <Login/>
+    {/* <Login/> */}
     <FeaturedProducts/>
     {/* <Signup/> */}
     <Footer/>

@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import { makeStyles } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import { Csrf_context } from '@/context/csrf_context';
+import { useRouter } from 'next/router';
 
 //   const [state, send] = useMachine(toggleMachine);
 
@@ -18,8 +19,8 @@ export const Login = () => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
-
-const { csrfToken } = useContext(Csrf_context);
+	const { csrfToken } = useContext(Csrf_context);
+	const router = useRouter();
 
 	function handleSubmit(e) {
 		e.preventDefault();
@@ -39,6 +40,8 @@ const { csrfToken } = useContext(Csrf_context);
 			})
 			.then((data) => {
 				console.log(data);
+				router.push('/');
+
 			})
 			.catch((err) => {
 				console.log(err);
@@ -81,14 +84,16 @@ const { csrfToken } = useContext(Csrf_context);
 							control={<Checkbox value='remember' color='primary' />}
 							label='Remember me'
 						/>
-						<Button
-							type='submit'
-							fullWidth
-							variant='contained'
-							sx={{ mt: 3, mb: 2 }}
-							onClick={handleSubmit}>
-							Sign In
-						</Button>
+						<Link href='/'>
+							<Button
+								type='submit'
+								fullWidth
+								variant='contained'
+								sx={{ mt: 3, mb: 2 }}
+								onClick={handleSubmit}>
+								Sign In
+							</Button>
+						</Link>
 						<Grid container>
 							<Grid item xs>
 								<Link href='#' variant='body2'>
