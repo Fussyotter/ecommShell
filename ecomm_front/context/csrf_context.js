@@ -3,26 +3,37 @@ import { createContext, useState, useEffect } from 'react';
 export const Csrf_context = createContext();
 
 export const CsrfProvider = ({ children }) => {
-	const [csrfToken, setCsrfToken] = useState('');
+  const [csrfToken, setCsrfToken] = useState('');
 
-	useEffect(() => {
-		async function fetchCsrfToken() {
-			const response = await fetch('http://localhost:8000/users/csrf/',
-			{credentials: 'include',})
-            .then((res) => {
-                let csrfToken = res.headers.get('X-CSRFToken');
-                setCsrfToken(csrfToken);
-            })
-            .catch((err) => {
-                console.log(err);
-            }
-            );
-		}
+  useEffect(() => {
+    async function fetchCsrfToken() {
+      const csrftoken = getCookie('csrftoken');
+      if (csrftoken) {
+        setCsrfToken(csrftoken);
+        return;
+      }
 
-		fetchCsrfToken();
-	}, []);
+      const response = await fetch('http://localhost:8000/users/csrf/', { credentials: 'include' });
+      const newCsrfToken = response.headers.get('X-CSRFToken');
+      setCsrfToken(newCsrfToken);
 
-	return (
-		<Csrf_context.Provider value={{ csrfToken, setCsrfToken }}>{children}</Csrf_context.Provider>
-	);
+      document.cookie = `csrftoken=${newCsrfToken}; path=/`;
+    }
+
+    fetchCsrfToken();
+  }, []);
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+      return parts.pop().split(';').shift();
+    }
+  }
+
+  return (
+    <Csrf_context.Provider value={{ csrfToken, setCsrfToken }}>
+      {children}
+    </Csrf_context.Provider>
+  );
 };

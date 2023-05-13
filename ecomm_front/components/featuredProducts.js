@@ -11,16 +11,18 @@ export default function FeaturedProducts (){
 	
 	
 
-	  const addToCart = (productId) => {
-			fetch(`http://localhost:8000/cart/add/${productId}/`, {
+	  const addToCart = (product_id, quantity) => {
+			fetch(`http://localhost:8000/cart/add/${product_id}/`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					'X-CSRFToken': csrfToken, 
+					'X-CsrfToken': csrfToken,
 				},
+				credentials: 'include',
+
 				body: JSON.stringify({
-					product_id: productId,
-					quantity: 1,
+					product_id: product_id,
+					quantity: quantity || 1,
 				}),
 			})
 				.then((response) => response.json())
