@@ -12,6 +12,8 @@ export default function FeaturedProducts (){
 	
 
 	  const addToCart = (product_id, quantity) => {
+			console.log('addToCart called', product_id, quantity); 
+
 			fetch(`http://localhost:8000/cart/add/${product_id}/`, {
 				method: 'POST',
 				headers: {
