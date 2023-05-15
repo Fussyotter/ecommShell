@@ -16,7 +16,7 @@ export default function FeaturedProducts (){
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					'X-CsrfToken': csrfToken,
+					'X-CSRFToken': csrfToken,
 				},
 				credentials: 'include',
 

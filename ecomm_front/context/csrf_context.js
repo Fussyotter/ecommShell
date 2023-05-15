@@ -31,8 +31,14 @@ export const CsrfProvider = ({ children }) => {
     }
   }
 
+  function updateCsrfToken(token) {
+			setCsrfToken(token);
+			document.cookie = `csrftoken=${token}; path=/`;
+		}
+
+
   return (
-    <Csrf_context.Provider value={{ csrfToken, setCsrfToken }}>
+    <Csrf_context.Provider value={{ csrfToken, updateCsrfToken }}>
       {children}
     </Csrf_context.Provider>
   );

@@ -19,7 +19,7 @@ export const Login = () => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
-	const { csrfToken, setCsrfToken } = useContext(Csrf_context);
+	const { csrfToken, updateCsrfToken } = useContext(Csrf_context);
 	const router = useRouter();
 
 	function handleSubmit(e) {
@@ -28,7 +28,7 @@ export const Login = () => {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				'X-CsrfToken': csrfToken,
+				'X-CSRFToken': csrfToken,
 			},
 			credentials: 'include',
 			body: JSON.stringify({ username: username, password: password }),
@@ -38,9 +38,9 @@ export const Login = () => {
 					throw new Error('Connecting problem');
 				}
 				// Generate a new csrf token when a user logs in
-				const newCsrfToken = response.headers.get('X-CSRFToken');
-        		console.log('New CSRF Token:', newCsrfToken);
-				setCsrfToken(newCsrfToken);
+				const newCsrfToken = response.headers.get('CSRF-Token'); // Use hyphen instead of camel case
+				console.log('New CSRF Token:', newCsrfToken);
+				updateCsrfToken(newCsrfToken);
 			})
 			.then(() => {
 				console.log('Logged in');
@@ -51,9 +51,7 @@ export const Login = () => {
 				setError('Username or password Incorrect');
 			});
 	}
-	 useEffect(() => {
-			console.log('CSRF Token:', csrfToken);
-		}, [csrfToken]);
+
 	return (
 		<>
 			<Container component='main' maxWidth='xs'>
