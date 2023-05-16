@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { AppBar, Box, Toolbar } from '@mui/material';
+import Cart from './cart';
 
 
 const Header = () => {
@@ -26,6 +27,7 @@ const Header = () => {
           <input type='text' placeholder='Search' />
           <button type='submit'>Search</button>
         </form>
+        <Cart />
       </Toolbar>
     </AppBar>
   );
