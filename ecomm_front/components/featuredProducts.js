@@ -51,6 +51,7 @@ export default function FeaturedProducts (){
 								</Typography>
 								<Typography variant='body2' color='text.secondary'>
 									{product.description}
+									
 								</Typography>
 								<p>${product.regular_price}</p>
 							</CardContent>
