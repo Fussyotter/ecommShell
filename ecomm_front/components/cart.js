@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Csrf_context } from '../context/csrf_context';
+import { useAuth } from '@/context/auth_context';
 
 
 const Cart = () => {
     const [cart, setCart] = useState({ items: [], total: 0 });
 	const { csrfToken } = useContext(Csrf_context);
+	const {currentUser} = useAuth();
 
 	useEffect(() => {
 		// Fetch cart items from the backend when the component mounts
@@ -37,12 +39,11 @@ const Cart = () => {
 			<h2>Your Cart</h2>
 			{cart.items.map((item) => (
 				<div key={item.id}>
-					<h3>{item.product.title}</h3>
-					<p>Quantity: {item.quantity}</p>
-					<p>Price: {item.product.regular_price}</p>
+					<h3>{item.product.title}: {item.quantity}</h3>
+					<p>Price: ${item.product.regular_price}</p>
 				</div>
 			))}
-			<h3>Total: {cart.total}</h3>
+			<h3>Total: ${cart.total}</h3>
 		</div>
 	);
 };

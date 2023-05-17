@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -8,22 +8,25 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import { Csrf_context } from '@/context/csrf_context';
 import { useRouter } from 'next/router';
+import { useAuth } from '@/context/auth_context';
 
 //   const [state, send] = useMachine(toggleMachine);
 
 export const Login = () => {
-	const [username, setUsername] = useState('');
-	const [password, setPassword] = useState('');
+  	const usernameRef = useRef();
+	const passwordRef = useRef();
 	const [error, setError] = useState('');
 	const { csrfToken, updateCsrfToken } = useContext(Csrf_context);
+	const { currentUser, setCurrentUser } = useAuth();
 	const router = useRouter();
 
 	function handleSubmit(e) {
 		e.preventDefault();
+		const username = usernameRef.current.value;
+		const password = passwordRef.current.value;
 		fetch('http://localhost:8000/users/login/', {
 			method: 'POST',
 			headers: {
@@ -41,10 +44,13 @@ export const Login = () => {
 				const newCsrfToken = response.headers.get('CSRF-Token'); // Use hyphen instead of camel case
 				console.log('New CSRF Token:', newCsrfToken);
 				updateCsrfToken(newCsrfToken);
+				setCurrentUser(username);
+				
 			})
 			.then(() => {
 				console.log('Logged in');
 				router.push('/');
+
 			})
 			.catch((err) => {
 				console.log(err);
@@ -71,7 +77,7 @@ export const Login = () => {
 							name='username'
 							autoComplete='username'
 							autoFocus
-							onChange={(e) => setUsername(e.target.value)}
+							inputRef={usernameRef} // use inputRef instead of onChange
 						/>
 						<TextField
 							margin='normal'
@@ -82,7 +88,7 @@ export const Login = () => {
 							type='password'
 							id='password'
 							autoComplete='current-password'
-							onChange={(e) => setPassword(e.target.value)}
+							inputRef={passwordRef} // use inputRef instead of onChange
 						/>
 						<FormControlLabel
 							control={<Checkbox value='remember' color='primary' />}

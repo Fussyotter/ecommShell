@@ -8,7 +8,9 @@ import theme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
 import { CsrfProvider } from '../context/csrf_context';
 import { ProductProvider } from '@/context/product_context';
-
+import { AuthProvider } from '@/context/auth_context';
+// import '../styles/debug.css';
+//  REMOVE THAT WHEN DONE DEBUGGING
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -22,11 +24,12 @@ export default function MyApp(props) {
 				<meta name='viewport' content='initial-scale=1, width=device-width' />
 			</Head>
 			<ThemeProvider theme={theme}>
-				<CsrfProvider >
+				<CsrfProvider>
 					<ProductProvider>
-
-				<CssBaseline />
-				<Component {...pageProps} />
+						<AuthProvider>
+						<CssBaseline />
+						<Component {...pageProps} />
+						</AuthProvider>
 					</ProductProvider>
 				</CsrfProvider>
 			</ThemeProvider>
