@@ -1,13 +1,21 @@
 import React from 'react';
 import Link from 'next/link';
-import { AppBar, Box, Toolbar, TextField, Icon, IconButton, InputAdornment} from '@mui/material';
+import {
+	AppBar,
+	Box,
+	Toolbar,
+	TextField,
+	Icon,
+	IconButton,
+	InputAdornment,
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useAuth } from '@/context/auth_context';
 
 import Cart from './cart';
 
 const Header = () => {
-  const {currentUser} = useAuth();
+	const { currentUser } = useAuth();
 	return (
 		<AppBar position='sticky'>
 			<Toolbar
@@ -30,7 +38,7 @@ const Header = () => {
 							endAdornment: (
 								<InputAdornment position='end'>
 									<IconButton type='submit'>
-                    <SearchIcon />
+										<SearchIcon />
 									</IconButton>
 								</InputAdornment>
 							),
@@ -43,17 +51,18 @@ const Header = () => {
 						flexDirection: 'column',
 						alignItems: 'flex-end',
 					}}>
-            {currentUser ? (
-              <div>Welcome, {currentUser}
-              
-              <Cart />
-              </div>
-            ) : (
-					<Link href='/login' variant='body2'>
-						{'Login'}
-					</Link>)}
+					{currentUser ? (
+						<div>
+							Welcome, {currentUser}
+							<Cart />
+						</div>
+					) : (
+						<Link href='/login' variant='body2'>
+							{'Login'}
+						</Link>
+					)}
 					<Link href='/signup' variant='body2'>
-						{"Register"}
+						{'Register'}
 					</Link>
 				</Box>
 			</Toolbar>

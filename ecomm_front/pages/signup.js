@@ -12,43 +12,37 @@ import { makeStyles } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import { Csrf_context } from '@/context/csrf_context';
 
-
-
-
-
-
 export default function Signup() {
-    const signUpNewUser = async (userData) => {
-        const response = await fetch('http://localhost:8000/users/register/', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						'X-CSRFToken': csrfToken,
-					},
-					credentials: 'include',
+	const signUpNewUser = async (userData) => {
+		const response = await fetch('http://localhost:8000/users/register/', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-CSRFToken': csrfToken,
+			},
+			credentials: 'include',
 
-					body: JSON.stringify(userData),
-				});
-        const data = await response.json();
-        console.log(data);
-    };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        signUpNewUser({
-            username,
-            password,
-            email: email,
+			body: JSON.stringify(userData),
+		});
+		const data = await response.json();
+		console.log(data);
+	};
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		signUpNewUser({
+			username,
+			password,
+			email: email,
+		});
+	};
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
 
-        });
-    };
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+	const [email, setEmail] = useState('');
 
-    const [email, setEmail] = useState('');
-
-    const [error, setError] = useState('');
-    const { csrfToken } = useContext(Csrf_context);
-  return (
+	const [error, setError] = useState('');
+	const { csrfToken } = useContext(Csrf_context);
+	return (
 		<Container component='main' maxWidth='xs'>
 			<CssBaseline />
 			<div>
@@ -98,24 +92,16 @@ export default function Signup() {
 								onChange={(e) => setEmail(e.target.value)}
 							/>
 						</Grid>
-						
-						
-						
-						
 					</Grid>
 					<Button
 						type='submit'
 						fullWidth
 						variant='contained'
 						sx={{ mt: 3, mb: 2 }}>
-              <Link href="/">
-
-						Sign Up
-              </Link>
+						<Link href='/'>Sign Up</Link>
 					</Button>
 				</form>
 			</div>
 		</Container>
 	);
-};
-            
+}
