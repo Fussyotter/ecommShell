@@ -27,7 +27,7 @@ const Header = () => {
           <input type='text' placeholder='Search' />
           <button type='submit'>Search</button>
         </form>
-        <Cart />
+        {/* <Cart /> */}
       </Toolbar>
     </AppBar>
   );
