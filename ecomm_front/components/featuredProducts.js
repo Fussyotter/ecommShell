@@ -1,7 +1,7 @@
 import {useContext} from 'react'
 import {ProductContext} from '../context/product_context'
 import {Csrf_context} from '../context/csrf_context'
-import { Card, CardContent, CardActions, Button, Grid, Typography } from '@mui/material';
+import { Card, CardMedia,CardContent, CardActions, Button, Grid, Typography } from '@mui/material';
 
 
 
@@ -45,13 +45,23 @@ export default function FeaturedProducts (){
 					<Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
 						<Card
 							sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+							{/* Adding the img tag to display the product image */}
+							{product.product_image.length > 0 &&
+								product.product_image[0].image && (
+									<CardMedia
+										component='img'
+										alt={product.title}
+										height='140'
+										image={product.product_image[0].image}
+									/>
+								)}
 							<CardContent sx={{ flexGrow: 1 }}>
 								<Typography gutterBottom variant='h5' component='h2'>
 									{product.title}
 								</Typography>
 								<Typography variant='body2' color='text.secondary'>
 									{product.description}
-									
+									{product.product_image.image}
 								</Typography>
 								<p>${product.regular_price}</p>
 							</CardContent>
