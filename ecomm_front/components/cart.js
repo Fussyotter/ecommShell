@@ -9,8 +9,9 @@ import {
 	ListItemText,
 	IconButton,
 	Grid,
+	Drawer,
+	Typography,
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { ShoppingCart } from '@mui/icons-material';
 
@@ -21,7 +22,6 @@ const Cart = () => {
 	const { currentUser } = useAuth();
 
 	useEffect(() => {
-		// Fetch cart items from the backend when the component mounts
 		fetchCartItems();
 	}, []);
 
@@ -45,10 +45,10 @@ const Cart = () => {
 			console.error('Error:', error);
 		}
 	};
-    const totalItemsInCart = cart.items.reduce(
-			(sum, item) => sum + item.quantity,
-			0
-		);
+	const totalItemsInCart = cart.items.reduce(
+		(sum, item) => sum + item.quantity,
+		0
+	);
 
 	return (
 		<div>
@@ -58,31 +58,42 @@ const Cart = () => {
 				</IconButton>
 				({totalItemsInCart})
 			</h2>
-			<Box sx={{ mt: 1 }}>
-				<List>
-					<TransitionGroup>
-						{cart.items.map((item) => (
-							<CSSTransition key={item.id} timeout={500} classNames='item'>
-								<Collapse in={open}>
-									<ListItem>
-										<Grid container>
-											<Grid item xs={8}>
-												<p>
-													{item.product.title} : {item.quantity}
-												</p>
+			<Drawer
+				anchor='right'
+				open={open}
+				onClose={() => setOpen(false)}
+				sx={{ '& .MuiPaper-root': { bgcolor: 'grey.300' } }}>
+				<Box sx={{ width: 250, p: 2 }}>
+					<Typography variant='h5' align='center'>
+						Your Cart
+					</Typography>
+					<Box sx={{ mt: 1 }}>
+						<List>
+							<TransitionGroup>
+								{cart.items.map((item) => (
+									<CSSTransition key={item.id} timeout={500} classNames='item'>
+										<ListItem>
+											<Grid container>
+												<Grid item xs={8}>
+													<p>
+														{item.product.title} : {item.quantity}
+													</p>
+												</Grid>
+												<Grid item xs={4}>
+													<p>${item.product.regular_price}</p>
+												</Grid>
 											</Grid>
-											<Grid item xs={4}>
-												<p>${item.product.regular_price}</p>
-											</Grid>
-										</Grid>
-									</ListItem>
-								</Collapse>
-							</CSSTransition>
-						))}
-					</TransitionGroup>
-				</List>
-			</Box>
-			<h3>Total: ${cart.total}</h3>
+										</ListItem>
+									</CSSTransition>
+								))}
+							</TransitionGroup>
+						</List>
+					</Box>
+					<Typography variant='h5' align='center'>
+						Total: ${cart.total}
+					</Typography>
+				</Box>
+			</Drawer>
 		</div>
 	);
 };

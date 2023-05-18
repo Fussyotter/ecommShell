@@ -53,8 +53,8 @@ const Header = () => {
 					}}>
 					{currentUser ? (
 						<div>
-							Welcome, {currentUser}
 							<Cart />
+							Welcome, {currentUser}
 						</div>
 					) : (
 						<Link href='/login' variant='body2'>
