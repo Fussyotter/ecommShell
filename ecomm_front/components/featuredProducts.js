@@ -45,13 +45,15 @@ export default function FeaturedProducts (){
 					<Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
 						<Card
 							sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-							{/* Adding the img tag to display the product image */}
+						
 							{product.product_image.length > 0 &&
 								product.product_image[0].image && (
 									<CardMedia
 										component='img'
 										alt={product.title}
-										height='140'
+										height='100'
+										paddingTop = '56.25%'
+										marginTop = '30'
 										image={product.product_image[0].image}
 									/>
 								)}
