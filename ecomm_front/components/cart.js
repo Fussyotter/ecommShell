@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { ShoppingCart } from '@mui/icons-material';
 
 const Cart = () => {
 	const [cart, setCart] = useState({ items: [], total: 0 });
@@ -36,7 +37,7 @@ const Cart = () => {
 			});
 			if (response.ok) {
 				const data = await response.json();
-				setCart(data); // Make sure to set to data.items, because you're sending items field from the backend
+				setCart(data);
 			} else {
 				console.error(`Error ${response.status}: ${response.statusText}`);
 			}
@@ -44,13 +45,19 @@ const Cart = () => {
 			console.error('Error:', error);
 		}
 	};
+    const totalItemsInCart = cart.items.reduce(
+			(sum, item) => sum + item.quantity,
+			0
+		);
 
 	return (
 		<div>
-			<h2>Your Cart {cart.items.length}</h2>
-			<IconButton onClick={() => setOpen(!open)}>
-				<ExpandMoreIcon />
-			</IconButton>
+			<h2>
+				<IconButton onClick={() => setOpen(!open)}>
+					<ShoppingCart />
+				</IconButton>
+				({totalItemsInCart})
+			</h2>
 			<Box sx={{ mt: 1 }}>
 				<List>
 					<TransitionGroup>

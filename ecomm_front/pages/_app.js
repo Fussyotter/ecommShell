@@ -9,7 +9,7 @@ import createEmotionCache from '../src/createEmotionCache';
 import { CsrfProvider } from '../context/csrf_context';
 import { ProductProvider } from '@/context/product_context';
 import { AuthProvider } from '@/context/auth_context';
-import '../styles/debug.css';
+// import '../styles/debug.css';
 //  REMOVE THAT WHEN DONE DEBUGGING
 
 // Client-side cache, shared for the whole session of the user in the browser.
