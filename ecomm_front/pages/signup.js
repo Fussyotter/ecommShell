@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import { makeStyles } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import { Csrf_context } from '@/context/csrf_context';
+import { useRouter } from 'next/router';
 
 export const Signup = () => {
   	const usernameRef = useRef();
@@ -19,12 +20,14 @@ export const Signup = () => {
 	const emailRef = useRef();
 	const [error, setError] = useState('');
 	const { csrfToken } = useContext(Csrf_context);
+	const router = useRouter();
 
 
 	function handleSubmit(e)  {
 		e.preventDefault();
 		const username = usernameRef.current.value;
 		const password = passwordRef.current.value;
+		const email = emailRef.current.value;
 		fetch('http://localhost:8000/users/register/', {
 			method: 'POST',
 			headers: {
@@ -35,8 +38,9 @@ export const Signup = () => {
 
 			body: JSON.stringify({ username: username, password: password }),
 		});
-		const data =  response.json();
-		console.log(data);
+						router.push('/');
+
+	
 	};
 
 	return (
@@ -83,7 +87,6 @@ export const Signup = () => {
 								fullWidth
 								id='email'
 								label='Email'
-								value={email}
 								inputRef={emailRef}
 							/>
 						</Grid>
@@ -100,3 +103,5 @@ export const Signup = () => {
 		</Container>
 	);
 }
+
+export default Signup;
