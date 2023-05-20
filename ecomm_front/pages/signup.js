@@ -13,6 +13,12 @@ import Container from '@mui/material/Container';
 import { Csrf_context } from '@/context/csrf_context';
 
 export default function Signup() {
+  	const usernameRef = useRef();
+	const passwordRef = useRef();
+
+	const emailRef = useRef();
+	const [error, setError] = useState('');
+	const { csrfToken } = useContext(Csrf_context);
 	const signUpNewUser = async (userData) => {
 		const response = await fetch('http://localhost:8000/users/register/', {
 			method: 'POST',
@@ -35,13 +41,6 @@ export default function Signup() {
 			email: email,
 		});
 	};
-	const [username, setUsername] = useState('');
-	const [password, setPassword] = useState('');
-
-	const [email, setEmail] = useState('');
-
-	const [error, setError] = useState('');
-	const { csrfToken } = useContext(Csrf_context);
 	return (
 		<Container component='main' maxWidth='xs'>
 			<CssBaseline />
