@@ -12,15 +12,20 @@ import { makeStyles } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import { Csrf_context } from '@/context/csrf_context';
 
-export default function Signup() {
+export const Signup = () => {
   	const usernameRef = useRef();
 	const passwordRef = useRef();
 
 	const emailRef = useRef();
 	const [error, setError] = useState('');
 	const { csrfToken } = useContext(Csrf_context);
-	const signUpNewUser = async (userData) => {
-		const response = await fetch('http://localhost:8000/users/register/', {
+
+
+	function handleSubmit(e)  {
+		e.preventDefault();
+		const username = usernameRef.current.value;
+		const password = passwordRef.current.value;
+		fetch('http://localhost:8000/users/register/', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -28,19 +33,12 @@ export default function Signup() {
 			},
 			credentials: 'include',
 
-			body: JSON.stringify(userData),
+			body: JSON.stringify({ username: username, password: password }),
 		});
-		const data = await response.json();
+		const data =  response.json();
 		console.log(data);
 	};
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		signUpNewUser({
-			username,
-			password,
-			email: email,
-		});
-	};
+
 	return (
 		<Container component='main' maxWidth='xs'>
 			<CssBaseline />
@@ -61,8 +59,7 @@ export default function Signup() {
 								id='username'
 								label='Username'
 								autoFocus
-								value={username}
-								onChange={(e) => setUsername(e.target.value)}
+								inputRef={usernameRef}
 							/>
 						</Grid>
 						<Grid item xs={12} sm={6}>
@@ -75,8 +72,7 @@ export default function Signup() {
 								id='password'
 								label='Password'
 								type='password'
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
+								inputRef={passwordRef}
 							/>
 						</Grid>
 						<Grid item xs={12} sm={6}>
@@ -88,7 +84,7 @@ export default function Signup() {
 								id='email'
 								label='Email'
 								value={email}
-								onChange={(e) => setEmail(e.target.value)}
+								inputRef={emailRef}
 							/>
 						</Grid>
 					</Grid>
