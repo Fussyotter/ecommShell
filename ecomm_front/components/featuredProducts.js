@@ -10,6 +10,7 @@ import {
 	Grid,
 	Typography,
 } from '@mui/material';
+import Link from 'next/link';
 
 export default function FeaturedProducts() {
 	const { products } = useContext(ProductContext);
@@ -47,11 +48,12 @@ export default function FeaturedProducts() {
 			<Grid container spacing={2}>
 				{products.map((product) => (
 					<Grid key={product.id} item xs={12} sm={6} md={4} lg={2}>
-						<Card raised
+						<Card
+							raised
 							sx={{
 								height: '100%',
 								maxWidth: 280,
-								boxShadow: 15,	
+								boxShadow: 15,
 								flexDirection: 'column',
 								margin: '0 auto',
 								padding: '1em 1em 0 1em',
@@ -66,9 +68,13 @@ export default function FeaturedProducts() {
 									/>
 								)}
 							<CardContent sx={{ flexGrow: 1 }}>
-								<Typography gutterBottom variant='h5' component='h2'>
-									{product.title}
-								</Typography>
+								<Link href={`/${product.slug}`}>
+									
+										<Typography gutterBottom variant='h5' component='h2'>
+											{product.title}
+										</Typography>
+									
+								</Link>
 								<Typography variant='body2' color='text.secondary'>
 									{product.description}
 									{product.product_image.image}
