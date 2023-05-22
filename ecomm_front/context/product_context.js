@@ -10,9 +10,11 @@ export const ProductProvider = ({ children }) => {
 
 	useEffect(() => {
 		async function fetchProducts() {
-			const response = await fetch('http://localhost:8000/api/')
+			const response = await fetch(
+				'http://localhost:8000/api/?page=2'
+			);
 			const data = await response.json();
-			setProducts(data);
+			setProducts(data.results);
 		}
 
 		fetchProducts();
