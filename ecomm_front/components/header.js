@@ -8,14 +8,38 @@ import {
 	Icon,
 	IconButton,
 	InputAdornment,
+	Typography,
 } from '@mui/material';
+import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
 import { useAuth } from '@/context/auth_context';
-
+import { Csrf_context } from '@/context/csrf_context';
 import Cart from './cart';
 
 const Header = () => {
-	const { currentUser } = useAuth();
+	const { currentUser, setCurrentUser } = useAuth();
+	const { csrfToken } = React.useContext(Csrf_context);
+	function handleLogout() {
+		fetch('http://localhost:8000/users/logout/', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-CSRFToken': csrfToken,
+			},
+			credentials: 'include',
+		})
+			.then((response) => {
+				if (response.ok) {
+					// Clear current user state
+					setCurrentUser(null);
+				} else {
+					throw new Error('Logout failed');
+				}
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+	}
 	return (
 		<AppBar position='sticky'>
 			<Toolbar
@@ -50,11 +74,23 @@ const Header = () => {
 						display: 'flex',
 						flexDirection: 'column',
 						alignItems: 'flex-end',
+						p: 1,
 					}}>
 					{currentUser ? (
-						<div>
+						<div style={{ display: 'flex', alignItems: 'center' }}>
 							<Cart />
-							Welcome, {currentUser}
+							<div>
+								<Typography variant='body2' sx={{ marginLeft: '1rem' }}>
+									Welcome, {currentUser}
+								</Typography>
+							</div>
+							<Button
+								size='small'
+								variant='contained'
+								onClick={handleLogout}
+								sx={{ m: 1 }}>
+								Logout
+							</Button>{' '}
 						</div>
 					) : (
 						<Link href='/login' variant='body2'>
