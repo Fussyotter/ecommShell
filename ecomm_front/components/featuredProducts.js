@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { ProductContext } from '../context/product_context';
 import { Csrf_context } from '../context/csrf_context';
 import {
@@ -11,10 +11,25 @@ import {
 	Typography,
 } from '@mui/material';
 import Link from 'next/link';
+const PAGE_SIZE = 10;
+
 
 export default function FeaturedProducts() {
-	const { products } = useContext(ProductContext);
 	const { csrfToken } = useContext(Csrf_context);
+
+	const [products, setProducts] = useState([]);
+	const [currentPage, setCurrentPage] = useState(1);
+	const [totalPages, setTotalPages] = useState(1);
+
+	const fetchProducts = (page) => {
+		fetch(`http://localhost:8000/api/?page=${currentPage}`)
+			.then((response) => response.json())
+			.then((data) => {
+				setProducts(data.results);
+				setTotalPages(Math.ceil(data.count / PAGE_SIZE)); // calculate total pages
+			})
+			.catch(console.error);
+	};
 
 	const addToCart = (product_id, quantity) => {
 		console.log('addToCart called', product_id, quantity);
@@ -42,6 +57,9 @@ export default function FeaturedProducts() {
 				// TODO: Show an error message
 			});
 	};
+	useEffect(() => {
+		fetchProducts(currentPage);
+	}, [currentPage]);
 	return (
 		<div>
 			<h1>Featured Products</h1>
@@ -69,11 +87,9 @@ export default function FeaturedProducts() {
 								)}
 							<CardContent sx={{ flexGrow: 1 }}>
 								<Link href={`/${product.slug}`}>
-									
-										<Typography gutterBottom variant='h5' component='h2'>
-											{product.title}
-										</Typography>
-									
+									<Typography gutterBottom variant='h5' component='h2'>
+										{product.title}
+									</Typography>
 								</Link>
 								<Typography variant='body2' color='text.secondary'>
 									{product.description}
@@ -90,6 +106,18 @@ export default function FeaturedProducts() {
 					</Grid>
 				))}
 			</Grid>
+			<div>
+				<button
+					onClick={() => setCurrentPage((oldPage) => Math.max(oldPage - 1, 1))}>
+					Previous Page
+				</button>
+				<button
+					onClick={() =>
+						setCurrentPage((oldPage) => Math.min(oldPage + 1, totalPages))
+					}>
+					Next Page
+				</button>
+			</div>
 		</div>
 	);
 }
