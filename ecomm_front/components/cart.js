@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { ShoppingCart } from '@mui/icons-material';
+import Link from 'next/link';
 
 const Cart = () => {
 	const [cart, setCart] = useState({ items: [], total: 0 });
@@ -91,6 +92,9 @@ const Cart = () => {
 					</Box>
 					<Typography variant='h5' align='center'>
 						Total: ${cart.total}
+						<Link href='/checkout'>
+							Checkout
+						</Link>
 					</Typography>
 				</Box>
 			</Drawer>
