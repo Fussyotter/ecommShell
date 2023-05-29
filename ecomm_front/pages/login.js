@@ -13,7 +13,6 @@ import { Csrf_context } from '@/context/csrf_context';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/context/auth_context';
 
-//   const [state, send] = useMachine(toggleMachine);
 
 export const Login = () => {
   	const usernameRef = useRef();
@@ -40,8 +39,7 @@ export const Login = () => {
 				if (!response.ok) {
 					throw new Error('Connecting problem');
 				}
-				// Generate a new csrf token when a user logs in
-				const newCsrfToken = response.headers.get('CSRF-Token'); // Use hyphen instead of camel case
+				const newCsrfToken = response.headers.get('CSRF-Token'); 
 				console.log('New CSRF Token:', newCsrfToken);
 				updateCsrfToken(newCsrfToken);
 				setCurrentUser(username);

@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 export default function ProductPage() {
 	const router = useRouter();
 	const { slug } = router.query;
-
 	const [product, setProduct] = useState(null);
 
 useEffect(() => {
