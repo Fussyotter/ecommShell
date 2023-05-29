@@ -11,7 +11,6 @@ export default function ProductCarousel() {
 				productGroups.push(products.slice(i, i + 3));
 			}
 	return (
-        // adjust actual carousel here
 		<Grid container justifyContent='center' alignItems='center'padding={2}>
 			<Grid item xs={6}>
 				<Carousel indicators = {false}interval= {8000} style={{ width: '60%', height: '300px' }}>

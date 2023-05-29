@@ -3,18 +3,16 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import { Csrf_context } from '@/context/csrf_context';
 import { useRouter } from 'next/router';
 
 export const Signup = () => {
-  	const usernameRef = useRef();
+	const usernameRef = useRef();
 	const passwordRef = useRef();
 
 	const emailRef = useRef();
@@ -22,8 +20,7 @@ export const Signup = () => {
 	const { csrfToken } = useContext(Csrf_context);
 	const router = useRouter();
 
-
-	function handleSubmit(e)  {
+	function handleSubmit(e) {
 		e.preventDefault();
 		const username = usernameRef.current.value;
 		const password = passwordRef.current.value;
@@ -38,10 +35,8 @@ export const Signup = () => {
 
 			body: JSON.stringify({ username: username, password: password }),
 		});
-						router.push('/');
-
-	
-	};
+		router.push('/');
+	}
 
 	return (
 		<Container component='main' maxWidth='xs'>
@@ -102,6 +97,6 @@ export const Signup = () => {
 			</div>
 		</Container>
 	);
-}
+};
 
 export default Signup;

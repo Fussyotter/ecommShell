@@ -1,11 +1,11 @@
 // context/product_context.js
+// Not using this but keeping it for reference
 import { createContext,useContext, useState, useEffect } from 'react';
 import { Csrf_context } from './csrf_context';
 
 export const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
-	// const { csrfToken } = useContext(Csrf_context);
 	const [products, setProducts] = useState([]);
 
 	useEffect(() => {
