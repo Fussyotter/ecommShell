@@ -9,6 +9,7 @@ import createEmotionCache from '../src/createEmotionCache';
 import { CsrfProvider } from '../context/csrf_context';
 import { ProductProvider } from '@/context/product_context';
 import { AuthProvider } from '@/context/auth_context';
+import { SearchProvider } from '@/context/search_context';
 // import '../styles/debug.css';
 //  REMOVE THAT WHEN DONE DEBUGGING
 
@@ -26,10 +27,12 @@ export default function MyApp(props) {
 			<ThemeProvider theme={theme}>
 				<CsrfProvider>
 					<ProductProvider>
+						<SearchProvider>
 						<AuthProvider>
 						<CssBaseline />
 						<Component {...pageProps} />
 						</AuthProvider>
+						</SearchProvider>
 					</ProductProvider>
 				</CsrfProvider>
 			</ThemeProvider>

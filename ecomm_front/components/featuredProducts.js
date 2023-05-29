@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { ProductContext } from '../context/product_context';
+import { Search_context } from '@/context/search_context';
 import { Csrf_context } from '../context/csrf_context';
 import {
 	Card,
@@ -16,20 +16,25 @@ const PAGE_SIZE = 10;
 
 export default function FeaturedProducts() {
 	const { csrfToken } = useContext(Csrf_context);
+	const { searchTerm } = useContext(Search_context);
 
 	const [products, setProducts] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
 
-	const fetchProducts = (page) => {
-		fetch(`http://localhost:8000/api/?page=${currentPage}`)
-			.then((response) => response.json())
-			.then((data) => {
-				setProducts(data.results);
-				setTotalPages(Math.ceil(data.count / PAGE_SIZE)); // calculate total pages
-			})
-			.catch(console.error);
-	};
+const fetchProducts = (page, searchTerm) => {
+	let endpoint = `http://localhost:8000/api/?page=${page}`;
+	if (searchTerm) {
+		endpoint += `&search=${searchTerm}`;
+	}
+	fetch(endpoint)
+		.then((response) => response.json())
+		.then((data) => {
+			setProducts(data.results);
+			setTotalPages(Math.ceil(data.count / PAGE_SIZE)); // calculate total pages
+		})
+		.catch(console.error);
+};
 
 	const addToCart = (product_id, quantity) => {
 		console.log('addToCart called', product_id, quantity);
@@ -57,9 +62,9 @@ export default function FeaturedProducts() {
 				// TODO: Show an error message
 			});
 	};
-	useEffect(() => {
-		fetchProducts(currentPage);
-	}, [currentPage]);
+  useEffect(() => {
+		fetchProducts(currentPage, searchTerm);
+	}, [currentPage, searchTerm]);
 	return (
 		<div>
 			<h1>Featured Products</h1>

@@ -14,6 +14,7 @@ import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
 import { useAuth } from '@/context/auth_context';
 import { Csrf_context } from '@/context/csrf_context';
+import { Search_context} from '@/context/search_context';
 import Cart from './cart';
 
 const Header = () => {
